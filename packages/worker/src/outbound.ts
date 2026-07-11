@@ -168,7 +168,7 @@ async function deliver(
       ...(mail.text ? { text: mail.text } : {}),
       ...(mail.html ? { html: mail.html } : {}),
       ...(mail.replyTo ? { replyTo: mail.replyTo } : {}),
-      headers: { "Message-ID": outboundRfcMessageId, ...(mail.headers || {}) },
+      headers: mail.headers || {},
     });
     const response = { id: messageId, status: "accepted", cloudflare_message_id: result.messageId };
     try {

@@ -38,3 +38,11 @@ Status: **in progress**. This file contains infrastructure-state evidence only. 
 - The polling API returned the message as unprocessed.
 - Explicit acknowledgement succeeded, after which the message was absent from the unprocessed feed.
 - This proves the active-recipient receive/poll/ack happy path. Unknown and disabled recipient SMTP behavior remains pending.
+
+## First live reply attempt
+
+- The initial threaded reply was rejected before transmission by Cloudflare Email Sending.
+- Cloudflare rejected the custom `Message-ID` header; the failed idempotency key remains permanently failed and was not reused.
+- A new test first reproduced the invalid request shape.
+- The Worker now preserves `In-Reply-To` and `References` while allowing Cloudflare to generate the outbound `Message-ID`.
+- The focused test and full local suite pass; a post-fix real reply remains pending.
