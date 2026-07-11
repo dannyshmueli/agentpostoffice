@@ -4,8 +4,6 @@
 
 ## Get it running with your agent
 
-![Agent-assisted installation: enable Cloudflare Workers Paid, log in with Wrangler, then ask your coding agent to deploy Agent Post Office](./docs/assets/agent-assisted-install.webp)
-
 1. Put your domain on Cloudflare and enable [Workers Paid](https://developers.cloudflare.com/workers/platform/pricing/) (minimum $5 USD/month).
 2. Sign in from your terminal:
 
@@ -18,6 +16,10 @@
    > Install Agent Post Office from `https://github.com/Agent-Post-Office/agentpostoffice-cloudflare` for `<your-domain>`. Create mailboxes `<your-mailboxes>`. Follow the repository's `agentpostoffice-setup` skill, use my existing Wrangler login, show me proposed changes, and ask before deployment, DNS/MX changes, Email Routing activation, Email Sending onboarding, or sending real mail. Do not ask me to paste API tokens into chat.
 
 That is the normal installation path. The rest of this README explains what the agent does and provides a manual fallback.
+
+### How it works
+
+![Agent Post Office architecture: inbound mail enters Cloudflare Email Routing, one Worker uses D1, R2, and Queues, agents connect through REST, CLI, or MCP, and outbound mail leaves through Email Sending](./docs/assets/how-it-works.webp)
 
 > **Developer preview:** The live receive, send, reply, authentication, and safe-download happy paths have been exercised, but the full failure-injection and deliverability matrix in [Phase 0](./docs/PHASE-0.md) is still in progress. Do not use this preview as the only copy of business-critical mail.
 
