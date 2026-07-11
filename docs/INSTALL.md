@@ -2,6 +2,16 @@
 
 This workflow is resumable and intentionally separates application resources from live mail routing. Do not change MX or activate the catch-all until the Worker is deployed, a token exists, and at least one intended mailbox has been created.
 
+## Fastest path: ask your agent
+
+1. Put the mail domain on Cloudflare and enable [Workers Paid](https://developers.cloudflare.com/workers/platform/pricing/) (minimum $5 USD/month).
+2. Run `npx wrangler login`.
+3. Give your coding agent this prompt:
+
+   > Install Agent Post Office from `https://github.com/Agent-Post-Office/agentpostoffice-cloudflare` for `<your-domain>`. Create mailboxes `<your-mailboxes>`. Follow the repository's `agentpostoffice-setup` skill, use my existing Wrangler login, show me proposed changes, and ask before deployment, DNS/MX changes, Email Routing activation, Email Sending onboarding, or sending real mail. Do not ask me to paste API tokens into chat.
+
+The agent runs the checks, provisions or reuses resources, deploys the Worker, creates the selected mailboxes, and guides the live mail cutover. The remaining sections are the detailed reference and manual fallback.
+
 ## 1. Prerequisites
 
 - Node.js 20+ and npm.

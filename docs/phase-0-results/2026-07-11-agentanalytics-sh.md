@@ -18,7 +18,7 @@ Status: **in progress**. This file records sanitized infrastructure and live-pat
 
 - Inbound byte fidelity and independent authentication interpretation remain to be checked.
 - Unknown and disabled recipient behavior must be exercised over SMTP.
-- Final outbound delivery/header authentication, failure-injection, parser-limit, and observability gates remain pending.
+- Failure-injection, parser-limit, boundary MIME, active HTML/SVG, and delivery-observability gates remain pending.
 
 ## First live inbound attempts
 

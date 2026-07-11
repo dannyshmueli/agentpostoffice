@@ -8,6 +8,21 @@ Agent Post Office is an open-source, self-hosted email service for agents. It ru
 
 The Phase 1 implementation is test-covered, and a live deployment has proved the active-recipient receive, parse, poll, and acknowledge happy path. The remaining mandatory Cloudflare Phase 0 gates are not complete, so the project should not yet be treated as production-ready. See [the architecture plan](./AGENTPOSTOFFICE-PLAN.md), [installation guide](./docs/INSTALL.md), and [live proof checklist](./docs/PHASE-0.md).
 
+## Get it running with your agent
+
+1. Put your domain on Cloudflare and enable [Workers Paid](https://developers.cloudflare.com/workers/platform/pricing/) (minimum $5 USD/month).
+2. Sign in from your terminal:
+
+   ```bash
+   npx wrangler login
+   ```
+
+3. Give your favorite coding agent this prompt:
+
+   > Install Agent Post Office from `https://github.com/Agent-Post-Office/agentpostoffice-cloudflare` for `<your-domain>`. Create mailboxes `<your-mailboxes>`. Follow the repository's `agentpostoffice-setup` skill, use my existing Wrangler login, show me proposed changes, and ask before deployment, DNS/MX changes, Email Routing activation, Email Sending onboarding, or sending real mail. Do not ask me to paste API tokens into chat.
+
+That is the normal installation path. The rest of this README explains what the agent does and provides a manual fallback.
+
 ## Monorepo
 
 | Package | Purpose |
