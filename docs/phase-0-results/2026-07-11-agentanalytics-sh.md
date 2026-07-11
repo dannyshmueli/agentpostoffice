@@ -65,3 +65,10 @@ Status: **in progress**. This file records sanitized infrastructure and live-pat
 - The CLI saved the file with owner-only permissions and refused to overwrite an existing path.
 - A separate live HTML message parsed successfully, remained marked untrusted, exposed no HTML through the normal message API, and was available only as a forced raw-message download with `nosniff`, sandbox, and private no-store protections.
 - Exact message and attachment details are deliberately not retained in this evidence file. The live SVG active-content check remains pending.
+
+## Sanitized size-boundary conclusion
+
+- A live message above the configured inbound limit received the Worker's permanent SMTP size rejection.
+- The rejected message did not appear in the polling API and therefore did not proceed to persistence or parsing.
+- Exact message and attachment sizes are deliberately not retained in this evidence file.
+- A just-below-limit live message must still be accepted, stored byte-for-byte, and parsed within deployed CPU and memory limits.
