@@ -1,0 +1,49 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "agentpostoffice",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-10",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "vars": {
+    "MAIL_DOMAIN": "mail.example.com",
+    "MAX_INBOUND_BYTES": "10485760",
+    "BODY_EXCERPT_BYTES": "8192",
+    "DLQ_NAME": "agentpostoffice-dlq"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "agentpostoffice",
+      "database_id": "REPLACE_D1_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MAIL_BUCKET",
+      "bucket_name": "agentpostoffice-mail"
+    }
+  ],
+  "queues": {
+    "producers": [
+      { "binding": "MAIL_QUEUE", "queue": "agentpostoffice-mail" }
+    ],
+    "consumers": [
+      {
+        "queue": "agentpostoffice-mail",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5,
+        "max_retries": 5,
+        "dead_letter_queue": "agentpostoffice-dlq"
+      },
+      {
+        "queue": "agentpostoffice-dlq",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5
+      }
+    ]
+  },
+  "send_email": [{ "name": "EMAIL" }]
+}

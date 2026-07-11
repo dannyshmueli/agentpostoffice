@@ -1,0 +1,39 @@
+{
+  "name": "agentpostoffice-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare-native, self-hosted email inboxes for agents",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm --workspace @agentpostoffice/client run build && npm --workspace @agentpostoffice/cli run build && npm --workspace @agentpostoffice/mcp run build && npm --workspace @agentpostoffice/worker run build",
+    "check": "npm --workspace @agentpostoffice/client run build && npm run check --workspaces --if-present && tsc --noEmit -p tsconfig.tools.json && npm run openapi:lint",
+    "clean": "npm run clean --workspaces --if-present",
+    "test": "npm run test:unit && npm run test:worker",
+    "test:unit": "vitest run --config vitest.config.ts",
+    "test:worker": "vitest run --config packages/worker/vitest.config.ts",
+    "test:watch": "vitest --config vitest.config.ts",
+    "openapi:lint": "redocly lint packages/openapi/spec/openapi.yaml",
+    "dev": "npm --workspace @agentpostoffice/worker run dev",
+    "deploy": "npm --workspace @agentpostoffice/worker run deploy",
+    "config:generate": "tsx tools/configure.ts",
+    "token:create": "tsx tools/token.ts create",
+    "token:list": "tsx tools/token.ts list",
+    "token:revoke": "tsx tools/token.ts revoke"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "0.18.4",
+    "@redocly/cli": "2.38.0",
+    "@types/node": "^24.0.0",
+    "tsx": "4.23.0",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10",
+    "wrangler": "4.110.0"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "@agentpostoffice/openapi",
+  "version": "0.1.0",
+  "private": true,
+  "files": ["spec/openapi.yaml"]
+}

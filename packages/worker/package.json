@@ -1,0 +1,21 @@
+{
+  "name": "@agentpostoffice/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "check": "tsc --noEmit",
+    "clean": "rm -rf dist .wrangler",
+    "dev": "wrangler dev --config wrangler.jsonc",
+    "deploy": "wrangler deploy --config wrangler.jsonc",
+    "migrate:local": "wrangler d1 migrations apply agentpostoffice --local --config wrangler.jsonc",
+    "migrate:remote": "wrangler d1 migrations apply agentpostoffice --remote --config wrangler.jsonc"
+  },
+  "dependencies": {
+    "postal-mime": "2.7.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20260710.1"
+  }
+}

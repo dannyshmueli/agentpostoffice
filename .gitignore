@@ -1,0 +1,10 @@
+.firecrawl/
+.dev.vars
+.wrangler/
+node_modules/
+dist/
+coverage/
+.agentpostoffice/
+wrangler.jsonc
+wrangler.jsonc.bak
+*.log

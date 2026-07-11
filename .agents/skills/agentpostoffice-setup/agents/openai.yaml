@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Post Office Setup"
+  short_description: "Provision and verify Agent Post Office on Cloudflare"
+  default_prompt: "Use $agentpostoffice-setup to install or verify Agent Post Office in my Cloudflare account."
