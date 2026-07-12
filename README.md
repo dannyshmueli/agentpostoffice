@@ -47,6 +47,7 @@ The Phase 1 implementation is test-covered, and a live deployment has proved the
 - Scoped SHA-256 bearer-token authentication with constant-time digest comparison.
 - Inbox CRUD; domain-wide keyset polling; message get/acknowledge/raw/attachment/delete; explicit-ID bulk deletion.
 - Transactional send and reply with required idempotency keys and `accepted`, `failed`, or `unknown` outcomes.
+- Automatic plain-text replies for new inbound messages through an opt-in, bounded Sieve profile and separate Automation Queue.
 - A shared client, local CLI, MCP server, versioned D1 migration, OpenAPI contract, and repo-local setup skill.
 
 All email bodies, subjects, headers, links, and attachments are untrusted. The service does not render HTML, open downloads, scan malware, promise exactly-once processing, or claim delivery after Cloudflare accepts a send.
@@ -98,7 +99,21 @@ The test suite has two gates:
 
 ## Sieve autoresponders
 
-Agent Post Office supports a deliberately bounded Sieve autoresponder profile. Scripts run only for newly ready inbound messages, one active revision per mailbox, through a separate Automation Queue. The profile supports standard `envelope` matching and plain-text `vacation` replies; it cannot inspect bodies, redirect, delete, reject, attach files, select arbitrary recipients, or run code.
+Automatic replies can run inside your Worker even when no agent process is connected. Agent Post Office supports a deliberately bounded Sieve autoresponder profile: one active script per mailbox, evaluated only for new inbound messages through a separate Automation Queue.
+
+This example replies to messages sent to `support@example.com`, then suppresses another automatic reply to the same sender for seven days:
+
+```sieve
+require ["envelope", "vacation"];
+
+if envelope :is "to" "support@example.com" {
+  vacation :days 7 :subject "We received your message"
+    "Thanks for writing. An agent will review your message.";
+  stop;
+}
+```
+
+The profile can match envelope and selected header metadata and send static plain-text `vacation` replies. It cannot inspect message bodies, redirect, delete, reject, attach files, select arbitrary recipients, or run code. Standard safety checks suppress replies to mailing lists, bulk mail, automated messages, daemon senders, and the mailbox itself.
 
 Store and activation are separate operations:
 
